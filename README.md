@@ -27,7 +27,7 @@ React, TypeScript, Vite, Tailwind CSS, shadcn/ui, Google Generative AI (Gemini),
 ## Build & verification notes
 
 - `npm run build` passes with `NODE_OPTIONS=--max-old-space-size=1200` on a ~2GB machine (1024 ran out of memory; 1536 was killed once by the container limit). No flag is needed on a normal dev machine. A `.npmrc` sets `legacy-peer-deps=true` so `npm ci` works with the committed lockfile.
-- `tsc --noEmit --skipLibCheck` reported 9 type errors in one run (shadcn `ui/` components and a few others); they do not block the Vite build. Not fixed. `@types/react` and `@types/react-dom` are not installed, so adding them would surface more errors; the full type check could not be rerun on a 2GB machine.
+- Type checking: `@types/react` and `@types/react-dom` are dev dependencies; the previously reported React-namespace type errors are fixed. Verified with targeted `tsc --noEmit` passes covering the client (`src/**`) and `vite.config.ts`, which pass. A single full-project `tsc` pass (and a `server.ts`-only pass) needs more than ~1.4GB of heap and could not be run on a 2GB machine; the Vite production build passes.
 - Checked in a headless browser, no keys: sign-in page, demo entry, home, Tasks (sample tasks), Calendar (sample events), World Clock, and the assistant chat showing the "AI features are off" message. No Firestore requests are made.
 - Also checked: creating a task and editing its title (local sample session). Mobile (390px) login and home render without horizontal overflow.
 - Not checked: any AI-generated output (needs a key and was deliberately not run), creating/editing calendar events, presentation, storyboard, data visualization, transcription, text-to-speech, and settings screens.
