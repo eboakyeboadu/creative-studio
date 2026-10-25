@@ -1,0 +1,227 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile and settings",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "theme": { "type": "string", "enum": ["light", "dark", "system"] },
+        "language": { "type": "string" },
+        "timezone": { "type": "string" },
+        "brandIdentity": {
+          "type": "object",
+          "properties": {
+            "logoUrl": { "type": "string" },
+            "primaryColor": { "type": "string" },
+            "secondaryColor": { "type": "string" },
+            "accentColor": { "type": "string" },
+            "toneOfVoice": { "type": "string" },
+            "guidelines": { "type": "string" }
+          }
+        }
+      },
+      "required": ["fullName", "email", "updatedAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "User task or to-do item",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "link": { "type": "string" },
+        "status": { "type": "string", "enum": ["todo", "completed"] },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "category": { "type": "string" },
+        "folder": { "type": "string" },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "status", "priority", "createdAt"]
+    },
+    "CalendarEvent": {
+      "title": "Calendar Event",
+      "description": "Event in the user's calendar",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "start": { "type": "string", "format": "date-time" },
+        "end": { "type": "string", "format": "date-time" },
+        "type": { "type": "string" },
+        "details": { "type": "string" },
+        "color": { "type": "string" }
+      },
+      "required": ["title", "start", "end"]
+    },
+    "Activity": {
+      "title": "Activity",
+      "description": "Recent user activity log",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "details": { "type": "string" },
+        "view": { "type": "string" },
+        "itemId": { "type": "string" }
+      },
+      "required": ["type", "title", "timestamp"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "A chat or presentation generation session",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "view": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "messages": { 
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": { "type": "string" },
+              "content": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "presentation": { "type": "object" },
+        "presentationPlan": { "type": "string" },
+        "uploadedFile": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "content": { "type": "string" }
+          }
+        },
+        "gambitOutput": { "type": "object" }
+      },
+      "required": ["title", "view", "timestamp"]
+    },
+    "Storyboard": {
+      "title": "Storyboard",
+      "description": "Video storyboard with scenes",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "characterDescription": { "type": "string" },
+        "targetAudience": { "type": "string" },
+        "aspectRatio": { "type": "string", "enum": ["16:9", "1:1", "9:16"] },
+        "scenes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "number": { "type": "integer" },
+              "timecode": { "type": "string" },
+              "narrative": { "type": "string" },
+              "prompt": { "type": "string" },
+              "isApproved": { "type": "boolean" }
+            }
+          }
+        },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "scenes", "timestamp"]
+    },
+    "Visualization": {
+      "title": "Data Visualization",
+      "description": "Marketing data chart configuration",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "type": { "type": "string", "enum": ["bar", "line", "pie", "area"] },
+        "data": { "type": "array", "items": { "type": "object" } },
+        "xAxisKey": { "type": "string" },
+        "yAxisKey": { "type": "string" },
+        "series": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": { "type": "string" },
+              "name": { "type": "string" },
+              "color": { "type": "string" }
+            }
+          }
+        },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "type", "data", "series", "timestamp"]
+    },
+    "Transcription": {
+      "title": "Transcription",
+      "description": "Audio transcription and analysis",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "language": { "type": "string" },
+        "fileName": { "type": "string" },
+        "structured": {
+          "type": "object",
+          "properties": {
+            "summary": { "type": "string" },
+            "keyPoints": { "type": "array", "items": { "type": "string" } },
+            "takeaways": { "type": "array", "items": { "type": "string" } },
+            "insights": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "chatHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": { "type": "string" },
+              "content": { "type": "string" }
+            }
+          }
+        }
+      },
+      "required": ["text", "timestamp", "language"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Root user profile document"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "User specific tasks"
+    },
+    "/users/{userId}/calendarEvents/{eventId}": {
+      "schema": "CalendarEvent",
+      "description": "User specific calendar events"
+    },
+    "/users/{userId}/activities/{activityId}": {
+      "schema": "Activity",
+      "description": "User specific activity history"
+    },
+    "/users/{userId}/conversations/{conversationId}": {
+      "schema": "Conversation",
+      "description": "User's chat and presentation history"
+    },
+    "/users/{userId}/storyboards/{storyboardId}": {
+      "schema": "Storyboard",
+      "description": "User's video storyboards"
+    },
+    "/users/{userId}/visualizations/{visualizationId}": {
+      "schema": "Visualization",
+      "description": "User's data visualizations"
+    },
+    "/users/{userId}/transcriptions/{transcriptionId}": {
+      "schema": "Transcription",
+      "description": "User's audio transcriptions"
+    }
+  }
+}
+

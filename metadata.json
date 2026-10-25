@@ -1,0 +1,10 @@
+{
+  "name": "Creative Studio",
+  "description": "An AI-powered creative studio for marketing teams to analyze metrics, generate images, translate content, review campaign performance, and create executive-ready presentations.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

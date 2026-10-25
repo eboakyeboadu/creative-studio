@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,900&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: 'Inter', sans-serif;
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-outfit: 'Inter', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+
+    --animate-border-beam: border-beam calc(var(--duration)*1s) infinite linear;
+    --animate-shine-pulse: shine-pulse var(--shine-pulse-duration) infinite linear;
+
+    @keyframes border-beam {
+        100% {
+            offset-distance: 100%;
+        }
+    }
+    @keyframes shine-pulse {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 100%;
+        }
+        to {
+            background-position: 0% 0%;
+        }
+    }
+}
+
+:root {
+    --background: #f4efe6;
+    --foreground: #1c2434;
+    --card: #fdfbf7;
+    --card-foreground: #1c2434;
+    --popover: #fdfbf7;
+    --popover-foreground: #1c2434;
+    --primary: hsl(4, 90%, 58%); /* studio red approx */
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(240, 5%, 96%);
+    --secondary-foreground: hsl(240, 5%, 20%);
+    --muted: hsl(240, 5%, 96%);
+    --muted-foreground: hsl(240, 5%, 50%);
+    --accent: hsl(240, 5%, 96%);
+    --accent-foreground: hsl(240, 5%, 20%);
+    --destructive: hsl(0, 84%, 60%);
+    --border: hsl(240, 6%, 90%);
+    --input: hsl(240, 6%, 90%);
+    --ring: hsl(4, 90%, 58%);
+    --chart-1: hsl(4, 90%, 58%); /* studio red */
+    --chart-2: hsl(220, 70%, 50%);
+    --chart-3: hsl(220, 60%, 45%);
+    --chart-4: hsl(0, 0%, 37%);
+    --chart-5: hsl(0, 0%, 27%);
+    --radius: 1rem;
+    --sidebar: #fdfbf7;
+    --sidebar-foreground: #1c2434;
+    --sidebar-primary: hsl(4, 90%, 58%);
+    --sidebar-primary-foreground: hsl(0, 0%, 100%);
+    --sidebar-accent: hsl(240, 5%, 96%);
+    --sidebar-accent-foreground: #1c2434;
+    --sidebar-border: hsl(240, 6%, 90%);
+    --sidebar-ring: hsl(4, 90%, 58%);
+}
+
+.dark {
+    --background: hsl(240, 10%, 12%); /* Deep slate for primary background */
+    --foreground: hsl(0, 0%, 98%);
+    --card: hsl(240, 10%, 18%); /* Lighter slate for cards to stand out */
+    --card-foreground: hsl(0, 0%, 98%);
+    --popover: hsl(240, 10%, 18%);
+    --popover-foreground: hsl(0, 0%, 98%);
+    --primary: hsl(4, 90%, 65%); /* Brighter red/orange in dark mode */
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(240, 10%, 22%); /* Noticeably lighter for secondary elements */
+    --secondary-foreground: hsl(0, 0%, 98%);
+    --muted: hsl(240, 10%, 22%);
+    --muted-foreground: hsl(240, 5%, 75%); /* Enhanced readability for muted text */
+    --accent: hsl(240, 10%, 22%);
+    --accent-foreground: hsl(0, 0%, 98%);
+    --destructive: hsl(4, 90%, 65%);
+    --border: hsl(240, 10%, 28%); /* More visible borders separating sections */
+    --input: hsl(240, 10%, 28%);
+    --ring: hsl(4, 90%, 65%);
+    --chart-1: hsl(4, 90%, 65%);
+    --chart-2: hsl(220, 70%, 65%);
+    --chart-3: hsl(220, 60%, 60%);
+    --chart-4: hsl(0, 0%, 47%);
+    --chart-5: hsl(0, 0%, 37%);
+    --sidebar: hsl(240, 10%, 14%); /* Distinct sidebar color */
+    --sidebar-foreground: hsl(0, 0%, 98%);
+    --sidebar-primary: hsl(4, 90%, 65%);
+    --sidebar-primary-foreground: hsl(0, 0%, 100%);
+    --sidebar-accent: hsl(240, 10%, 22%);
+    --sidebar-accent-foreground: hsl(0, 0%, 98%);
+    --sidebar-border: hsl(240, 10%, 28%);
+    --sidebar-ring: hsl(4, 90%, 65%);
+}
+
+@layer utilities {
+  .font-impact {
+    font-family: 'Impact', 'Arial Black', ui-sans-serif, system-ui, sans-serif !important;
+  }
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+  .dark .glass {
+    @apply bg-background/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)];
+  }
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-lg border border-border/50 shadow-lg;
+  }
+  .dark .glass-card {
+    @apply bg-card/70 backdrop-blur-xl border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.4)];
+  }
+  .premium-card {
+    @apply relative overflow-hidden transition-all duration-500 border border-white/40 bg-white/90 backdrop-blur-xl shadow-xl;
+  }
+  .dark .premium-card {
+    @apply border-white/10 bg-card/80 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.5)];
+    background-image: radial-gradient(at 0% 0%, hsla(4, 90%, 65%, 0.12) 0px, transparent 65%),
+                      radial-gradient(at 100% 100%, hsla(220, 70%, 65%, 0.1) 0px, transparent 65%);
+  }
+  .vibrant-icon-container {
+    @apply flex items-center justify-center rounded-3xl transition-all duration-500 bg-foreground/5 shadow-[0_0_30px_rgba(0,0,0,0.05)] group-hover:shadow-[0_0_40px_rgba(0,0,0,0.1)];
+  }
+  .dark .vibrant-icon-container {
+    @apply bg-white/5 shadow-[0_0_30px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.1)];
+  }
+  /* Keep color classes for mapping but make them neutral */
+  .vibrant-icon-green { @apply bg-green-500/10 text-green-500; }
+  .vibrant-icon-orange { @apply bg-orange-500/10 text-orange-500; }
+  .vibrant-icon-amber { @apply bg-amber-500/10 text-amber-500; }
+  .vibrant-icon-yellow { @apply bg-yellow-500/10 text-yellow-500; }
+  .vibrant-icon-blue { @apply bg-blue-500/10 text-blue-500; }
+  .vibrant-icon-purple { @apply bg-purple-500/10 text-purple-500; }
+  .vibrant-icon-indigo { @apply bg-indigo-500/10 text-indigo-500; }
+  .vibrant-icon-emerald { @apply bg-emerald-500/10 text-emerald-500; }
+  .vibrant-icon-pink { @apply bg-pink-500/10 text-pink-500; }
+  .vibrant-icon-rose { @apply bg-rose-500/10 text-rose-500; }
+  .vibrant-icon-red { @apply bg-red-500/10 text-red-500; }
+
+  /* SlidePreview Dynamic Dark Mode Overrides for "Dark" Style Preset */
+  .dark-slide .bg-white { background-color: #000000 !important; }
+  .dark-slide .text-black { color: #FFFFFF !important; }
+  .dark-slide .text-black\/60 { color: rgba(255, 255, 255, 0.6) !important; }
+  .dark-slide .text-black\/70 { color: rgba(255, 255, 255, 0.7) !important; }
+  .dark-slide .text-black\/80 { color: rgba(255, 255, 255, 0.8) !important; }
+  .dark-slide .text-black\/90 { color: rgba(255, 255, 255, 0.9) !important; }
+  .dark-slide .text-black\/20 { color: rgba(255, 255, 255, 0.2) !important; }
+  .dark-slide .text-black\/30 { color: rgba(255, 255, 255, 0.3) !important; }
+  .dark-slide .text-black\/40 { color: rgba(255, 255, 255, 0.4) !important; }
+  .dark-slide .bg-black\/5 { background-color: rgba(255, 255, 255, 0.05) !important; }
+  .dark-slide .bg-black\/10 { background-color: rgba(255, 255, 255, 0.1) !important; }
+  .dark-slide .bg-black\/20 { background-color: rgba(255, 255, 255, 0.2) !important; }
+  .dark-slide .bg-black\/30 { background-color: rgba(255, 255, 255, 0.3) !important; }
+  .dark-slide .border-black\/5 { border-color: rgba(255, 255, 255, 0.05) !important; }
+  .dark-slide .border-black\/10 { border-color: rgba(255, 255, 255, 0.1) !important; }
+  .dark-slide .border-black\/30 { border-color: rgba(255, 255, 255, 0.3) !important; }
+  .dark-slide .bg-\[\#FAFAFA\] { background-color: #111111 !important; }
+  .dark-slide .bg-\[\#F8F9FA\] { background-color: #111111 !important; }
+  .dark-slide .bg-\[\#000000\] { background-color: #FFFFFF !important; text-color: #000000; }
+  .dark-slide .text-white { color: #000000 !important; }
+  .dark-slide .border-white { border-color: #000000 !important; }
+
+  /* SlidePreview Dynamic Gem Mode Overrides for "Gem" Style Preset */
+  .gem-slide { background-color: #f4f1eb !important; font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; }
+  .gem-slide .bg-white { background-color: transparent !important; }
+  .gem-slide .text-black { color: #2d302c !important; }
+  .gem-slide .text-black\/60 { color: rgba(45, 48, 44, 0.6) !important; }
+  .gem-slide .text-black\/70 { color: rgba(45, 48, 44, 0.7) !important; }
+  .gem-slide .text-black\/80 { color: rgba(45, 48, 44, 0.8) !important; }
+  .gem-slide .text-black\/90 { color: rgba(45, 48, 44, 0.9) !important; }
+  .gem-slide .bg-black\/5 { background-color: rgba(45, 48, 44, 0.05) !important; }
+  .gem-slide .bg-black\/10 { background-color: rgba(45, 48, 44, 0.1) !important; }
+  .gem-slide .border-black\/5 { border-color: rgba(45, 48, 44, 0.1) !important; border-width: 0.5px; }
+  .gem-slide .border-black\/10 { border-color: rgba(45, 48, 44, 0.2) !important; border-width: 0.5px;}
+  .gem-slide .bg-\[\#FAFAFA\] { background-color: #ebe7df !important; }
+  .gem-slide .bg-\[\#F8F9FA\] { background-color: #ebe7df !important; }
+  .gem-slide .bg-\[\#000000\] { background-color: #2d302c !important; color: #f4f1eb; }
+  .gem-slide .text-white { color: #f4f1eb !important; }
+  .gem-slide .border-white { border-color: #f4f1eb !important; }
+  .gem-slide .bg-\[\#FF2B2B\] { background-color: #FF2B2B !important; }
+  .gem-slide .text-\[\#FF2B2B\] { color: #FF2B2B !important; }
+  .gem-slide .border-\[\#FF2B2B\] { border-color: #FF2B2B !important; }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans font-normal;
+  }
+  h1, h2 {
+    @apply font-heading font-extrabold tracking-tight;
+  }
+  h3, h4, h5, h6 {
+    @apply font-heading font-semibold tracking-tight;
+  }
+  button {
+    @apply font-sans font-medium;
+  }
+  .metadata, .placeholder, ::placeholder {
+    @apply font-light;
+  }
+  .data-row {
+    @apply font-normal;
+  }
+}

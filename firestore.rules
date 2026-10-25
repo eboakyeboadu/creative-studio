@@ -1,0 +1,126 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation helpers
+    function isValidUser(data) {
+      return data.keys().hasAll(['fullName', 'email', 'photoUrl', 'updatedAt', 'theme', 'language', 'timezone']) &&
+             data.fullName is string &&
+             data.email is string &&
+             data.updatedAt == request.time;
+    }
+
+    function isValidTask(data) {
+      return data.keys().hasAll(['title', 'status', 'priority', 'createdAt']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.status in ['todo', 'completed'] &&
+             data.priority in ['low', 'medium', 'high'];
+    }
+
+    function isValidStoryboard(data) {
+      return data.keys().hasAll(['title', 'scenes', 'timestamp']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.scenes is list && data.scenes.size() <= 50 &&
+             data.timestamp == request.time;
+    }
+
+    function isValidVisualization(data) {
+      return data.keys().hasAll(['title', 'type', 'data', 'series', 'timestamp']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.type in ['bar', 'line', 'pie', 'area'] &&
+             data.data is list && data.data.size() <= 1000 &&
+             data.timestamp == request.time;
+    }
+
+    function isValidTranscription(data) {
+      return data.keys().hasAll(['text', 'timestamp', 'language']) &&
+             data.text is string && data.text.size() <= 100000 &&
+             data.language is string && data.language.size() <= 10 &&
+             data.timestamp == request.time;
+    }
+
+    // User Profile Rules
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && 
+        isValidUser(incoming()) &&
+        incoming().email == request.auth.token.email;
+      allow update: if isOwner(userId) && 
+        incoming().updatedAt == request.time &&
+        incoming().email == existing().email;
+      allow delete: if isOwner(userId);
+
+      // Subcollections
+      match /tasks/{taskId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidTask(incoming());
+        allow update, delete: if isOwner(userId);
+      }
+
+      match /calendarEvents/{eventId} {
+        allow read: if isOwner(userId);
+        allow create, update, delete: if isOwner(userId);
+      }
+
+      match /activities/{activityId} {
+        allow read: if isOwner(userId);
+        allow create, update, delete: if isOwner(userId);
+      }
+
+      match /conversations/{convId} {
+        allow read: if isOwner(userId);
+        allow create, update, delete: if isOwner(userId);
+      }
+
+      match /transcriptions/{transcriptionId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidTranscription(incoming());
+        allow update: if isOwner(userId) && isValidTranscription(incoming());
+        allow delete: if isOwner(userId);
+      }
+
+      match /storyboards/{storyboardId} {
+        allow read: if isOwner(userId);
+        allow create, update, delete: if isOwner(userId);
+      }
+
+      match /visualizations/{visualizationId} {
+        allow read: if isOwner(userId);
+        allow create, update, delete: if isOwner(userId);
+      }
+      
+      match /notifications/{notificationId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId);
+        allow update: if isOwner(userId) && incoming().diff(existing()).affectedKeys().hasOnly(['read']);
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}
+
